@@ -1,33 +1,10 @@
 "use client"
 
 import { useRef } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import { OrbitControls, Environment, ContactShadows } from "@react-three/drei"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Mail, MapPin, Phone } from "lucide-react"
-
-function Model(props) {
-  // This is a placeholder for a 3D model
-  // In a real implementation, you would use useGLTF to load a custom model
-  const ref = useRef()
-
-  useFrame((state) => {
-    if (ref.current) {
-      ref.current.rotation.y = state.clock.getElapsedTime() * 0.3
-    }
-  })
-
-  return (
-    <group ref={ref} {...props}>
-      <mesh>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="#4169e1" roughness={0.3} metalness={0.8} />
-      </mesh>
-    </group>
-  )
-}
 
 export default function About() {
   const containerRef = useRef(null)
@@ -143,21 +120,41 @@ export default function About() {
         </div>
 
         <motion.div
-          className="order-1 lg:order-2 h-[400px] lg:h-[600px]"
+          className="order-1 lg:order-2"
           style={{ y }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <Canvas>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
-            <Environment preset="city" />
-            <OrbitControls enableZoom={false} enablePan={false} />
-            <ContactShadows position={[0, -1.5, 0]} opacity={0.4} scale={5} blur={2.5} far={4} />
-            <Model position={[0, 0, 0]} scale={2} />
-          </Canvas>
+          <div className="relative h-[400px] lg:h-[600px] rounded-lg overflow-hidden bg-secondary/10 backdrop-blur-sm border border-primary/20">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20" />
+
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+              <div className="w-40 h-40 rounded-full bg-primary/20 backdrop-blur-md mb-6 flex items-center justify-center">
+                <span className="text-5xl font-bold gradient-text">AV</span>
+              </div>
+
+              <h3 className="text-2xl font-bold mb-4">Akshat Vora</h3>
+
+              <div className="space-y-2 max-w-md">
+                <p className="text-muted-foreground">
+                  "I believe in creating technology that makes a positive impact on people's lives."
+                </p>
+
+                <div className="pt-4">
+                  <Badge className="mr-2 mb-2">Problem Solver</Badge>
+                  <Badge className="mr-2 mb-2">Creative Thinker</Badge>
+                  <Badge className="mr-2 mb-2">Team Player</Badge>
+                  <Badge className="mr-2 mb-2">Continuous Learner</Badge>
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative elements */}
+            <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-primary/10 blur-xl animate-float" />
+            <div className="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-secondary/10 blur-xl animate-float-slow" />
+          </div>
         </motion.div>
       </motion.div>
     </section>

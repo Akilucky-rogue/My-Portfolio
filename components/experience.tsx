@@ -1,8 +1,6 @@
 "use client"
 
 import { useRef } from "react"
-import { Canvas } from "@react-three/fiber"
-import { Text, Float, OrbitControls, Environment } from "@react-three/drei"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -48,39 +46,38 @@ function ExperienceItem({ position, company, location, period, description, type
   )
 }
 
-function TimelineSphere({ position, text, color = "#4169e1" }) {
+function TimelineVisual() {
   return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-      <group position={position}>
-        <mesh>
-          <sphereGeometry args={[0.5, 32, 32]} />
-          <meshStandardMaterial color={color} roughness={0.3} metalness={0.8} />
-        </mesh>
-        <Text position={[0, 0, 0.6]} fontSize={0.2} color="white" anchorX="center" anchorY="middle">
-          {text}
-        </Text>
-      </group>
-    </Float>
-  )
-}
+    <div className="relative h-full w-full">
+      {/* Timeline line */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-primary/20 transform -translate-x-1/2" />
 
-function Timeline() {
-  return (
-    <>
-      <ambientLight intensity={0.5} />
-      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
-      <Environment preset="city" />
-      <OrbitControls enableZoom={false} enablePan={false} autoRotate={true} autoRotateSpeed={0.5} />
+      {/* Timeline nodes */}
+      <div className="absolute left-1/2 top-[20%] w-6 h-6 rounded-full bg-primary transform -translate-x-1/2 glow">
+        <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-50" />
+        <div className="absolute -right-24 top-1/2 transform -translate-y-1/2 bg-primary/10 backdrop-blur-sm px-3 py-1 rounded-full">
+          <span className="text-sm font-medium">2023</span>
+        </div>
+      </div>
 
-      <mesh position={[0, 0, -1]}>
-        <cylinderGeometry args={[0.05, 0.05, 10, 32]} />
-        <meshStandardMaterial color="#4169e1" roughness={0.3} metalness={0.8} />
-      </mesh>
+      <div className="absolute left-1/2 top-[50%] w-6 h-6 rounded-full bg-purple-500 transform -translate-x-1/2 glow">
+        <div className="absolute inset-0 rounded-full bg-purple-500 animate-ping opacity-50" />
+        <div className="absolute -right-24 top-1/2 transform -translate-y-1/2 bg-purple-500/10 backdrop-blur-sm px-3 py-1 rounded-full">
+          <span className="text-sm font-medium">2022</span>
+        </div>
+      </div>
 
-      <TimelineSphere position={[0, 2, 0]} text="2023" color="#4169e1" />
-      <TimelineSphere position={[0, 0, 0]} text="2022" color="#9c27b0" />
-      <TimelineSphere position={[0, -2, 0]} text="2021" color="#ff4081" />
-    </>
+      <div className="absolute left-1/2 top-[80%] w-6 h-6 rounded-full bg-pink-500 transform -translate-x-1/2 glow">
+        <div className="absolute inset-0 rounded-full bg-pink-500 animate-ping opacity-50" />
+        <div className="absolute -right-24 top-1/2 transform -translate-y-1/2 bg-pink-500/10 backdrop-blur-sm px-3 py-1 rounded-full">
+          <span className="text-sm font-medium">2021</span>
+        </div>
+      </div>
+
+      {/* Decorative elements */}
+      <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-primary/5 blur-xl animate-float" />
+      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-purple-500/5 blur-xl animate-float-slow" />
+    </div>
   )
 }
 
@@ -151,10 +148,8 @@ export default function Experience() {
               <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">Work Experience</h2>
               <p className="text-lg text-muted-foreground mb-6">My professional journey and internships</p>
 
-              <div className="h-[300px] lg:h-[500px] rounded-lg overflow-hidden">
-                <Canvas>
-                  <Timeline />
-                </Canvas>
+              <div className="h-[300px] lg:h-[500px] rounded-lg overflow-hidden bg-secondary/10 backdrop-blur-sm border border-primary/20">
+                <TimelineVisual />
               </div>
             </motion.div>
           </div>

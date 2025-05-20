@@ -1,13 +1,11 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { Canvas } from "@react-three/fiber"
-import { Environment, Float, Text } from "@react-three/drei"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, ArrowLeft, ArrowRight } from "lucide-react"
+import { ExternalLink, Github, ArrowLeft, ArrowRight, Code } from "lucide-react"
 
 function ProjectCard({ project, index, totalProjects, currentIndex, setCurrentIndex }) {
   const isActive = index === currentIndex
@@ -44,8 +42,14 @@ function ProjectCard({ project, index, totalProjects, currentIndex, setCurrentIn
             </div>
 
             <div className="relative h-[200px] rounded-md overflow-hidden bg-background/50">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-muted-foreground">Project Preview</p>
+                <div className="text-center">
+                  <div className="bg-background/40 backdrop-blur-sm p-4 rounded-full mb-4 inline-block">
+                    <Code className="h-8 w-8 text-primary" />
+                  </div>
+                  <p className="text-muted-foreground">Project Preview</p>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -109,20 +113,17 @@ function ProjectControls({ currentIndex, setCurrentIndex, totalProjects }) {
   )
 }
 
-function ProjectTitle() {
+function ProjectsHeader() {
   return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-      <Text
-        position={[0, 0, 0]}
-        fontSize={1}
-        color="#4169e1"
-        font="/fonts/SpaceGrotesk-Bold.ttf"
-        anchorX="center"
-        anchorY="middle"
-      >
-        PROJECTS
-      </Text>
-    </Float>
+    <div className="relative">
+      <div className="absolute -top-12 -left-12 w-40 h-40 rounded-full bg-primary/5 blur-3xl" />
+      <div className="absolute -bottom-12 -right-12 w-40 h-40 rounded-full bg-secondary/5 blur-3xl" />
+
+      <div className="relative z-10 text-center p-8 bg-secondary/10 backdrop-blur-sm rounded-lg border border-primary/10">
+        <h3 className="text-2xl font-bold gradient-text mb-2">PROJECTS</h3>
+        <p className="text-muted-foreground">Showcasing my technical skills and creativity</p>
+      </div>
+    </div>
   )
 }
 
@@ -188,12 +189,7 @@ export default function Projects() {
               <p className="text-lg text-muted-foreground mb-6">Showcasing my technical skills and creativity</p>
 
               <div className="h-[200px] rounded-lg overflow-hidden">
-                <Canvas>
-                  <ambientLight intensity={0.5} />
-                  <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
-                  <Environment preset="city" />
-                  <ProjectTitle />
-                </Canvas>
+                <ProjectsHeader />
               </div>
 
               <div className="mt-8">

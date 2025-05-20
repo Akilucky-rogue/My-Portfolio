@@ -1,82 +1,64 @@
 "use client"
 
-import { useRef, useState } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import { Text, Float } from "@react-three/drei"
+import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-function SkillSphere({ skill, position, color = "#4169e1", size = 0.5 }) {
-  const ref = useRef()
-  const [hovered, setHovered] = useState(false)
+function SkillBubble({ skill, index, total }) {
+  // Calculate position in a circular pattern
+  const angle = (index / total) * 2 * Math.PI
+  const radius = 120
+  const x = Math.cos(angle) * radius
+  const y = Math.sin(angle) * radius
+  const size = Math.max(60, Math.min(100, 80 + Math.random() * 20))
 
-  useFrame((state) => {
-    if (ref.current) {
-      ref.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1
-      ref.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.2) * 0.1
-    }
-  })
+  // Generate a color based on index
+  const colors = ["#4169e1", "#9c27b0", "#ff4081", "#00bcd4", "#4caf50", "#ff9800"]
+  const color = colors[index % colors.length]
 
   return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-      <group
-        ref={ref}
-        position={position}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-      >
-        <mesh scale={hovered ? 1.2 : 1}>
-          <sphereGeometry args={[size, 32, 32]} />
-          <meshStandardMaterial color={color} roughness={0.3} metalness={0.8} />
-        </mesh>
-        <Text
-          position={[0, 0, size + 0.1]}
-          fontSize={size * 0.8}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-          maxWidth={2}
-          textAlign="center"
-        >
-          {skill}
-        </Text>
-      </group>
-    </Float>
+    <motion.div
+      className="absolute rounded-full flex items-center justify-center"
+      style={{
+        left: `calc(50% + ${x}px)`,
+        top: `calc(50% + ${y}px)`,
+        width: size,
+        height: size,
+        backgroundColor: `${color}20`,
+        border: `2px solid ${color}40`,
+        transform: "translate(-50%, -50%)",
+      }}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{
+        delay: index * 0.05,
+        duration: 0.5,
+        type: "spring",
+        stiffness: 100,
+      }}
+    >
+      <span className="text-xs font-medium text-center px-2">{skill}</span>
+    </motion.div>
   )
 }
 
 function SkillsCloud({ skills }) {
-  const positions = [
-    [-2, 2, 0],
-    [0, 2, 1],
-    [2, 2, 0],
-    [-2, 0, 1],
-    [0, 0, 0],
-    [2, 0, 1],
-    [-2, -2, 0],
-    [0, -2, 1],
-    [2, -2, 0],
-  ]
-
-  const colors = ["#4169e1", "#9c27b0", "#ff4081", "#00bcd4", "#4caf50", "#ff9800", "#9c27b0", "#4169e1", "#ff4081"]
-
   return (
-    <>
-      <ambientLight intensity={0.5} />
-      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
+    <div className="relative w-full h-full">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg" />
 
-      {skills.slice(0, 9).map((skill, index) => (
-        <SkillSphere
-          key={index}
-          skill={skill}
-          position={positions[index]}
-          color={colors[index]}
-          size={0.5 + Math.random() * 0.3}
-        />
+      {/* Center point */}
+      <div className="absolute left-1/2 top-1/2 w-16 h-16 rounded-full bg-primary/20 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+        <span className="text-xs font-bold">SKILLS</span>
+      </div>
+
+      {/* Skill bubbles */}
+      {skills.slice(0, 12).map((skill, index, array) => (
+        <SkillBubble key={index} skill={skill} index={index} total={array.length} />
       ))}
-    </>
+    </div>
   )
 }
 
@@ -188,9 +170,7 @@ export default function Skills() {
             <p className="text-lg text-muted-foreground mb-6">Technical and professional competencies</p>
 
             <div className="h-[400px] rounded-lg overflow-hidden bg-secondary/10 backdrop-blur-sm border border-primary/20">
-              <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-                <SkillsCloud skills={skillCategories.flatMap((category) => category.skills)} />
-              </Canvas>
+              <SkillsCloud skills={skillCategories.flatMap((category) => category.skills)} />
             </div>
           </motion.div>
 

@@ -1,66 +1,70 @@
 "use client"
 
-import dynamic from "next/dynamic"
-import { Suspense } from "react"
+import { useState, useEffect, Suspense, lazy } from "react"
 import { Loader } from "@/components/loader"
+import { useInView } from "react-intersection-observer"
 
-// Dynamically import 3D components to avoid SSR issues
-const Hero = dynamic(() => import("@/components/hero"), {
-  ssr: false,
-  loading: () => <Loader text="Loading hero..." />,
-})
+// Use React.lazy instead of next/dynamic for better control
+const Hero = lazy(() => import("@/components/hero"))
+const About = lazy(() => import("@/components/about"))
+const Experience = lazy(() => import("@/components/experience"))
+const Projects = lazy(() => import("@/components/projects"))
+const Skills = lazy(() => import("@/components/skills"))
+const Contact = lazy(() => import("@/components/contact"))
 
-const About = dynamic(() => import("@/components/about"), {
-  ssr: false,
-  loading: () => <Loader text="Loading about..." />,
-})
+// Lightweight placeholder components
+const HeroPlaceholder = () => (
+  <section id="hero" className="section">
+    <div className="section-content flex items-center justify-center min-h-screen">
+      <div className="text-center">
+        <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-4">Akshat Vora</h1>
+        <p className="text-xl text-muted-foreground">Computer Engineering Student & Developer</p>
+      </div>
+    </div>
+  </section>
+)
 
-const Experience = dynamic(() => import("@/components/experience"), {
-  ssr: false,
-  loading: () => <Loader text="Loading experience..." />,
-})
+// Progressive loading component
+function ProgressiveSection({ id, component: Component, threshold = 0.1 }) {
+  const [ref, inView] = useInView({
+    threshold,
+    triggerOnce: true,
+  })
+  const [shouldLoad, setShouldLoad] = useState(false)
 
-const Projects = dynamic(() => import("@/components/projects"), {
-  ssr: false,
-  loading: () => <Loader text="Loading projects..." />,
-})
+  useEffect(() => {
+    if (inView) {
+      setShouldLoad(true)
+    }
+  }, [inView])
 
-const Skills = dynamic(() => import("@/components/skills"), {
-  ssr: false,
-  loading: () => <Loader text="Loading skills..." />,
-})
-
-const Contact = dynamic(() => import("@/components/contact"), {
-  ssr: false,
-  loading: () => <Loader text="Loading contact..." />,
-})
+  return (
+    <div ref={ref} id={id} className="min-h-screen">
+      {shouldLoad ? (
+        <Suspense fallback={<Loader text={`Loading ${id} section...`} />}>
+          <Component />
+        </Suspense>
+      ) : (
+        <Loader text={`Loading ${id} section...`} />
+      )}
+    </div>
+  )
+}
 
 export function PortfolioSections() {
   return (
     <>
-      <Suspense fallback={<Loader text="Loading hero..." />}>
+      {/* Hero section loads immediately */}
+      <Suspense fallback={<HeroPlaceholder />}>
         <Hero />
       </Suspense>
 
-      <Suspense fallback={<Loader text="Loading about..." />}>
-        <About />
-      </Suspense>
-
-      <Suspense fallback={<Loader text="Loading experience..." />}>
-        <Experience />
-      </Suspense>
-
-      <Suspense fallback={<Loader text="Loading projects..." />}>
-        <Projects />
-      </Suspense>
-
-      <Suspense fallback={<Loader text="Loading skills..." />}>
-        <Skills />
-      </Suspense>
-
-      <Suspense fallback={<Loader text="Loading contact..." />}>
-        <Contact />
-      </Suspense>
+      {/* Other sections load progressively as user scrolls */}
+      <ProgressiveSection id="about" component={About} />
+      <ProgressiveSection id="experience" component={Experience} />
+      <ProgressiveSection id="projects" component={Projects} />
+      <ProgressiveSection id="skills" component={Skills} />
+      <ProgressiveSection id="contact" component={Contact} />
     </>
   )
 }

@@ -207,3 +207,27 @@
     0px 10px 10px rgba(0, 0, 0, 0.2),
     0px 20px 20px rgba(0, 0, 0, 0.15);
 }
+
+/* Light performance mode styles */
+.light-performance .canvas-container {
+  display: none !important;
+}
+
+.light-performance .section {
+  background: var(--background) !important;
+}
+
+.light-performance .card-3d:hover {
+  transform: none !important;
+}
+
+@media (max-width: 768px) {
+  /* Automatically use lighter rendering on mobile */
+  .canvas-container {
+    opacity: 0.5;
+  }
+
+  .card-3d:hover {
+    transform: none !important;
+  }
+}
