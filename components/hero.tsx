@@ -22,7 +22,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 z-10">
+      <div className="container mx-auto px-4 z-10 max-w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -30,7 +30,7 @@ export default function Hero() {
           className="text-center"
         >
           <motion.h1
-            className="text-5xl md:text-7xl font-bold mb-6 gradient-text"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 gradient-text"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -39,7 +39,7 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p
-            className="text-xl md:text-2xl text-primary mb-4"
+            className="text-lg sm:text-xl md:text-2xl text-primary mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -48,7 +48,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.p
-            className="text-lg md:text-xl text-muted-foreground mb-12"
+            className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}

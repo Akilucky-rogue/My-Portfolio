@@ -21,10 +21,11 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: "Akshat Vora | 3D Interactive Portfolio",
+  title: "Akshat Vora | Portfolio",
   description:
-    "Interactive 3D portfolio showcasing the work and skills of Akshat Vora, Computer Engineering student and developer",
-  keywords: ["portfolio", "3D", "developer", "Akshat Vora", "web development", "interactive"],
+    "Interactive portfolio showcasing the work and skills of Akshat Vora, Computer Engineering student and developer",
+  keywords: ["portfolio", "developer", "Akshat Vora", "web development", "interactive"],
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
     generator: 'v0.dev'
 }
 
@@ -35,11 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Preload critical assets */}
-        <link rel="preload" href="/fonts/SpaceGrotesk-Bold.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-      </head>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans`}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans overflow-x-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Suspense fallback={<div className="h-16 bg-background" />}>
             <Navigation />

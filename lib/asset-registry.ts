@@ -28,19 +28,5 @@ export function registerPortfolioAssets() {
     },
   ])
 
-  // Register fonts
-  assetManager.registerAssets([
-    {
-      id: "space-grotesk-bold",
-      url: "/fonts/SpaceGrotesk-Bold.ttf",
-      type: "font",
-      priority: "critical",
-    },
-    {
-      id: "space-grotesk-regular",
-      url: "/fonts/SpaceGrotesk-Regular.ttf",
-      type: "font",
-      priority: "critical",
-    },
-  ])
+  // Removed font loading since fonts are loaded via next/font/google in layout.tsx
 }

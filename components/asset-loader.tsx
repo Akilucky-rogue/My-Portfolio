@@ -6,16 +6,21 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { assetManager, useAssetManager } from "@/lib/asset-manager"
 import { Loader } from "@/components/loader"
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import { RefreshCw } from "lucide-react"
 
 interface AssetLoaderProps {
   children: React.ReactNode
+  minDisplayTime?: number
 }
 
-export function AssetLoader({ children }: AssetLoaderProps) {
+export function AssetLoader({ children, minDisplayTime = 1000 }: AssetLoaderProps) {
   const { progress, loaded, total, isComplete, errors } = useAssetManager()
   const [displayProgress, setDisplayProgress] = useState(0)
   const [canHide, setCanHide] = useState(false)
   const [showLoader, setShowLoader] = useState(true)
+  const [retryCount, setRetryCount] = useState(0)
 
   // Smooth progress animation
   useEffect(() => {
@@ -32,30 +37,40 @@ export function AssetLoader({ children }: AssetLoaderProps) {
 
   // Handle minimum display time
   useEffect(() => {
-    if (isComplete) {
+    if (isComplete || (errors.length > 0 && loaded === total - errors.length)) {
       const timer = setTimeout(() => {
         setCanHide(true)
-      }, 2000)
+      }, minDisplayTime)
 
       return () => clearTimeout(timer)
     }
-  }, [isComplete])
+  }, [isComplete, errors.length, loaded, total, minDisplayTime])
 
   // Hide loader when complete and min time passed
   useEffect(() => {
-    if (isComplete && canHide) {
+    if ((isComplete || errors.length > 0) && canHide) {
       const timer = setTimeout(() => {
         setShowLoader(false)
       }, 500)
 
       return () => clearTimeout(timer)
     }
-  }, [isComplete, canHide])
+  }, [isComplete, canHide, errors.length])
 
   // Start loading when component mounts
   useEffect(() => {
     assetManager.startLoading()
-  }, [])
+  }, [retryCount])
+
+  // Function to retry loading failed assets
+  const handleRetry = () => {
+    setRetryCount((prev) => prev + 1)
+  }
+
+  // Continue even if some assets failed to load
+  const handleContinue = () => {
+    setCanHide(true)
+  }
 
   return (
     <>
@@ -94,15 +109,29 @@ export function AssetLoader({ children }: AssetLoaderProps) {
                 </div>
 
                 {errors.length > 0 && (
-                  <div className="mt-4 p-3 bg-destructive/10 text-destructive rounded-md text-sm">
-                    <p className="font-medium">Some assets failed to load:</p>
-                    <ul className="list-disc list-inside mt-1">
-                      {errors.slice(0, 3).map((error, index) => (
-                        <li key={index}>{error.id}</li>
-                      ))}
-                      {errors.length > 3 && <li>...and {errors.length - 3} more</li>}
-                    </ul>
-                  </div>
+                  <Alert variant="destructive" className="mt-4">
+                    <AlertTitle>Some assets failed to load ({errors.length})</AlertTitle>
+                    <AlertDescription>
+                      <ul className="list-disc list-inside mt-1 mb-4 text-sm">
+                        {errors.slice(0, 3).map((error, index) => (
+                          <li key={index}>
+                            {error.id}: {error.error.message}
+                          </li>
+                        ))}
+                        {errors.length > 3 && <li>...and {errors.length - 3} more</li>}
+                      </ul>
+
+                      <div className="flex gap-2 mt-2">
+                        <Button variant="outline" size="sm" onClick={handleRetry}>
+                          <RefreshCw className="mr-2 h-4 w-4" />
+                          Retry
+                        </Button>
+                        <Button variant="default" size="sm" onClick={handleContinue}>
+                          Continue Anyway
+                        </Button>
+                      </div>
+                    </AlertDescription>
+                  </Alert>
                 )}
               </div>
 

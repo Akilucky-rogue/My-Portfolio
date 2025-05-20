@@ -28,20 +28,20 @@ export default function About() {
             className="space-y-6"
           >
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">About Me</h2>
-              <p className="text-lg text-muted-foreground">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 gradient-text">About Me</h2>
+              <p className="text-base sm:text-lg text-muted-foreground">
                 Computer Engineering student with a passion for technology and innovation
               </p>
             </div>
 
             <Card className="bg-secondary/30 backdrop-blur-sm border-primary/20">
-              <CardContent className="p-6">
-                <p className="text-lg leading-relaxed">
+              <CardContent className="p-4 sm:p-6">
+                <p className="text-base sm:text-lg leading-relaxed">
                   I am a BTech Integrated Computer Engineering student at MPSTME, NMIMS University, with a strong
                   foundation in programming, web development, and design. I am passionate about creating innovative
                   solutions and have experience in various technologies including Python, Java, JavaScript, and more.
                 </p>
-                <p className="text-lg leading-relaxed mt-4">
+                <p className="text-base sm:text-lg leading-relaxed mt-4">
                   With a diverse skill set spanning from software development to graphic design, I enjoy tackling
                   complex problems and building applications that make a difference. I am currently serving as a Student
                   Placecom for Batch 2026 and have held various positions of responsibility in technical clubs.
@@ -52,67 +52,67 @@ export default function About() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Card className="bg-secondary/30 backdrop-blur-sm border-primary/20">
                 <CardContent className="p-4 flex items-center gap-4">
-                  <div className="bg-primary/20 p-3 rounded-full">
-                    <Calendar className="h-6 w-6 text-primary" />
+                  <div className="bg-primary/20 p-2 sm:p-3 rounded-full">
+                    <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Date of Birth</p>
-                    <p className="font-medium">October 27, 2004</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Date of Birth</p>
+                    <p className="text-sm sm:text-base font-medium">October 27, 2004</p>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-secondary/30 backdrop-blur-sm border-primary/20">
                 <CardContent className="p-4 flex items-center gap-4">
-                  <div className="bg-primary/20 p-3 rounded-full">
-                    <Mail className="h-6 w-6 text-primary" />
+                  <div className="bg-primary/20 p-2 sm:p-3 rounded-full">
+                    <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium">akshatbvora@gmail.com</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Email</p>
+                    <p className="text-sm sm:text-base font-medium truncate">akshatbvora@gmail.com</p>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-secondary/30 backdrop-blur-sm border-primary/20">
                 <CardContent className="p-4 flex items-center gap-4">
-                  <div className="bg-primary/20 p-3 rounded-full">
-                    <Phone className="h-6 w-6 text-primary" />
+                  <div className="bg-primary/20 p-2 sm:p-3 rounded-full">
+                    <Phone className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
-                    <p className="font-medium">+91 8850490510</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Phone</p>
+                    <p className="text-sm sm:text-base font-medium">+91 8850490510</p>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-secondary/30 backdrop-blur-sm border-primary/20">
                 <CardContent className="p-4 flex items-center gap-4">
-                  <div className="bg-primary/20 p-3 rounded-full">
-                    <MapPin className="h-6 w-6 text-primary" />
+                  <div className="bg-primary/20 p-2 sm:p-3 rounded-full">
+                    <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium">Mumbai, India</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Location</p>
+                    <p className="text-sm sm:text-base font-medium">Mumbai, India</p>
                   </div>
                 </CardContent>
               </Card>
             </div>
 
             <div className="flex flex-wrap gap-2">
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm">
                 Student Placecom for Batch 2026
               </Badge>
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm">
                 Taqneeq – Technical Executive (2022-23)
               </Badge>
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm">
                 IETE MPSTME – R&D Executive (2022-23)
               </Badge>
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm">
                 Sattva - Technical Executive (2022-23)
               </Badge>
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm">
                 ACM – Creatives Exec; RnD Sr. Exec; RnD Head (2022-25)
               </Badge>
             </div>
@@ -120,33 +120,33 @@ export default function About() {
         </div>
 
         <motion.div
-          className="order-1 lg:order-2"
+          className="order-1 lg:order-2 h-[300px] sm:h-[400px] lg:h-[600px]"
           style={{ y }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="relative h-[400px] lg:h-[600px] rounded-lg overflow-hidden bg-secondary/10 backdrop-blur-sm border border-primary/20">
+          <div className="relative h-full w-full rounded-lg overflow-hidden bg-secondary/10 backdrop-blur-sm border border-primary/20">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20" />
 
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-              <div className="w-40 h-40 rounded-full bg-primary/20 backdrop-blur-md mb-6 flex items-center justify-center">
-                <span className="text-5xl font-bold gradient-text">AV</span>
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-4 sm:p-8 text-center">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full bg-primary/20 backdrop-blur-md mb-4 sm:mb-6 flex items-center justify-center">
+                <span className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text">AV</span>
               </div>
 
-              <h3 className="text-2xl font-bold mb-4">Akshat Vora</h3>
+              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Akshat Vora</h3>
 
               <div className="space-y-2 max-w-md">
-                <p className="text-muted-foreground">
+                <p className="text-sm sm:text-base text-muted-foreground">
                   "I believe in creating technology that makes a positive impact on people's lives."
                 </p>
 
-                <div className="pt-4">
-                  <Badge className="mr-2 mb-2">Problem Solver</Badge>
-                  <Badge className="mr-2 mb-2">Creative Thinker</Badge>
-                  <Badge className="mr-2 mb-2">Team Player</Badge>
-                  <Badge className="mr-2 mb-2">Continuous Learner</Badge>
+                <div className="pt-2 sm:pt-4">
+                  <Badge className="mr-2 mb-2 text-xs">Problem Solver</Badge>
+                  <Badge className="mr-2 mb-2 text-xs">Creative Thinker</Badge>
+                  <Badge className="mr-2 mb-2 text-xs">Team Player</Badge>
+                  <Badge className="mr-2 mb-2 text-xs">Continuous Learner</Badge>
                 </div>
               </div>
             </div>

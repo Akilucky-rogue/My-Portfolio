@@ -29,6 +29,18 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Close mobile menu when window is resized to desktop size
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && isOpen) {
+        setIsOpen(false)
+      }
+    }
+
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [isOpen])
+
   return (
     <motion.header
       initial={{ y: -100 }}
@@ -44,14 +56,14 @@ export function Navigation() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-4 lg:space-x-8">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} className="text-sm font-medium hover:text-primary transition-colors">
               {item.label}
             </Link>
           ))}
           <ModeToggle />
-          <Button asChild>
+          <Button asChild size="sm" className="ml-2">
             <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
               Resume
             </a>
@@ -59,10 +71,10 @@ export function Navigation() {
         </nav>
 
         {/* Mobile Navigation Toggle */}
-        <div className="flex items-center md:hidden space-x-4">
+        <div className="flex items-center md:hidden space-x-2">
           <ModeToggle />
           <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
         </div>
       </div>

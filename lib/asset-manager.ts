@@ -1,10 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js"
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js"
-import { TextureLoader, AudioLoader } from "three"
 
 // Asset types
 export type AssetType = "image" | "document" | "json" | "font" | "other"
@@ -13,7 +9,7 @@ export type AssetType = "image" | "document" | "json" | "font" | "other"
 export type AssetPriority = "critical" | "high" | "medium" | "low"
 
 // Asset status
-export type AssetStatus = "pending" | "loading" | "loaded" | "error"
+export type AssetStatus = "pending" | "loading" | "loaded" | "error" | "retrying"
 
 // Asset definition
 export interface Asset {
@@ -41,28 +37,6 @@ class AssetManager {
   private completeListeners: Set<() => void> = new Set()
   private maxRetries = 3
   private retryDelay = 2000 // 2 seconds
-
-  // Loaders
-  private gltfLoader: GLTFLoader
-  private textureLoader: TextureLoader
-  private audioLoader: AudioLoader
-  private fontLoader: FontLoader
-  private dracoLoader: DRACOLoader
-
-  constructor() {
-    // Initialize loaders
-    this.dracoLoader = new DRACOLoader()
-    // Use the official Draco decoder from Google CDN
-    this.dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.5/")
-    this.dracoLoader.setDecoderConfig({ type: "js" }) // Use JS decoder for better compatibility
-
-    this.gltfLoader = new GLTFLoader()
-    this.gltfLoader.setDRACOLoader(this.dracoLoader)
-
-    this.textureLoader = new TextureLoader()
-    this.audioLoader = new AudioLoader()
-    this.fontLoader = new FontLoader()
-  }
 
   // Register an asset to be loaded
   registerAsset(
@@ -244,17 +218,32 @@ class AssetManager {
 
   // Load a font
   private loadFont(asset: Asset): void {
-    const fontFace = new FontFace(asset.id, `url(${asset.url})`)
+    // Check if the font is already loaded via next/font
+    if (document.fonts && Array.from(document.fonts).some((font) => font.family.includes(asset.id))) {
+      console.log(`Font ${asset.id} already loaded via next/font, skipping`)
+      this.handleAssetLoaded(asset, { loaded: true })
+      return
+    }
 
-    fontFace
-      .load()
-      .then((loadedFont) => {
-        document.fonts.add(loadedFont)
-        this.handleAssetLoaded(asset, loadedFont)
-      })
-      .catch((error) => {
-        this.handleAssetError(asset, error)
-      })
+    try {
+      const fontFace = new FontFace(asset.id, `url(${asset.url})`)
+
+      fontFace
+        .load()
+        .then((loadedFont) => {
+          document.fonts.add(loadedFont)
+          this.handleAssetLoaded(asset, loadedFont)
+        })
+        .catch((error) => {
+          console.warn(`Failed to load font ${asset.id}, falling back to system fonts:`, error)
+          // Mark as loaded anyway to prevent blocking
+          this.handleAssetLoaded(asset, { loaded: false, fallback: true })
+        })
+    } catch (error) {
+      console.warn(`Error creating FontFace for ${asset.id}:`, error)
+      // Mark as loaded anyway to prevent blocking
+      this.handleAssetLoaded(asset, { loaded: false, fallback: true })
+    }
   }
 
   // Load other types of assets
