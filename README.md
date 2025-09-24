@@ -1,30 +1,38 @@
-# My PortFolio
+# My v0 Project
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+This is a Next.js project bootstrapped with `create-next-app`.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/akshat-voras-projects-30d38840/v0-my-port-folio)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/KN7wUrHnKj5)
+## Getting Started
 
-## Overview
+First, install the dependencies:
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+```bash
+pnpm install
+```
 
-## Deployment
+Then, run the development server:
 
-Your project is live at:
+```bash
+pnpm dev
+```
 
-**[https://vercel.com/akshat-voras-projects-30d38840/v0-my-port-folio](https://vercel.com/akshat-voras-projects-30d38840/v0-my-port-folio)**
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Build your app
+## Project Structure
 
-Continue building your app on:
+- `app/`: Contains the core application logic, including pages and layouts.
+- `components/`: Holds reusable React components used throughout the application.
+- `contexts/`: Stores React context providers for state management.
+- `hooks/`: Contains custom React hooks.
+- `lib/`: A place for utility functions and libraries.
+- `public/`: Stores static assets like images, fonts, and icons.
+- `styles/`: Contains global stylesheets.
 
-**[https://v0.dev/chat/projects/KN7wUrHnKj5](https://v0.dev/chat/projects/KN7wUrHnKj5)**
+## Available Scripts
 
-## How It Works
+In the project directory, you can run:
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+- `pnpm dev`: Runs the app in the development mode.
+- `pnpm build`: Builds the app for production to the `.next` folder.
+- `pnpm start`: Starts the production server.
+- `pnpm lint`: Runs the linter.
