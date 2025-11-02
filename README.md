@@ -1,30 +1,35 @@
-# My PortFolio
+# My Portfolio (remade)
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+This repository has been remade as a minimal, content-driven portfolio.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/akshat-voras-projects-30d38840/v0-my-port-folio)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/KN7wUrHnKj5)
+What’s included:
 
-## Overview
+- Next.js (app router) + TypeScript
+- Tailwind CSS for styling
+- Contentlayer + MDX for repo-based content (edit the `content/` folder)
+- Minimal theme tokens in `styles/globals.css`
+- CI: GitHub Actions workflow to run lint & build
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+How to run locally
 
-## Deployment
+Install dependencies and run the dev server:
 
-Your project is live at:
+```powershell
+npm install
+npm run dev
+```
 
-**[https://vercel.com/akshat-voras-projects-30d38840/v0-my-port-folio](https://vercel.com/akshat-voras-projects-30d38840/v0-my-port-folio)**
+To build:
 
-## Build your app
+```powershell
+npm run build
+npm start
+```
 
-Continue building your app on:
+Editing content
 
-**[https://v0.dev/chat/projects/KN7wUrHnKj5](https://v0.dev/chat/projects/KN7wUrHnKj5)**
+- Add MDX files to `content/projects/*.mdx` for projects. They will be picked up by Contentlayer at build time.
 
-## How It Works
+Notes
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+- This is an overwrite of the previous project as requested. No backup was taken.

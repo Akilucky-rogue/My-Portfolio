@@ -1,49 +1,19 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter, Space_Grotesk } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Navigation } from "@/components/navigation"
-import { Analytics } from "@/components/analytics"
-import { Suspense } from "react"
+import './globals.css'
+import { Inter, Space_Grotesk } from 'next/font/google'
 
-// Optimize font loading
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap", // Use swap to prevent FOIT
-})
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const space = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' })
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space",
-  display: "swap", // Use swap to prevent FOIT
-})
-
-export const metadata: Metadata = {
-  title: "Akshat Vora | Portfolio",
-  description:
-    "Interactive portfolio showcasing the work and skills of Akshat Vora, Computer Engineering student and developer",
-  keywords: ["portfolio", "developer", "Akshat Vora", "web development", "interactive"],
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
-    generator: 'v0.dev'
+export const metadata = {
+  title: 'Akshat Vora — VC Analyst & Software Engineer',
+  description: 'Venture Capital Analyst and Software Engineer passionate about technology and investing.',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans overflow-x-hidden`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <Suspense fallback={<div className="h-16 bg-background" />}>
-            <Navigation />
-          </Suspense>
-          {children}
-          <Analytics />
-        </ThemeProvider>
+    <html lang="en">
+      <body className={`${inter.variable} ${space.variable} font-sans bg-[var(--color-bg)] text-[var(--color-fg)]`}>
+        {children}
       </body>
     </html>
   )

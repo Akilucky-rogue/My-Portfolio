@@ -1,15 +1,22 @@
+import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight'
+import withMDX from '@next/mdx'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     unoptimized: true,
   },
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 }
 
-export default nextConfig
+const mdxPlugin = withMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeHighlight],
+  },
+})
+
+export default mdxPlugin(nextConfig)
